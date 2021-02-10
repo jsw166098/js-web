@@ -69,6 +69,10 @@ console.log(document.getElementById('active').tagName)
 * id
 * class 
 
+## Element.tagName
+
+* element의 id element의 프로퍼티이며 값을 조회할 수 있다. 
+
 ## Element.id
 
 * element의 id는 element의 프로퍼티이며 값을 조회하고 변경할 수 있다.
@@ -145,7 +149,7 @@ toggle('<class명>')  // 클래스명 존재시 제거 없으면 추가
 # 조회 api
 
 ## document.getElementBy* 메소드
-* document 객체는 문서 전체를 의미하는 개개체이다.
+* document 객체는 문서 전체를 의미하는 객체이다.
 * 문서 전체를 대상으로 element를 찾게 된다.
 
 ## element.getElementBy* 메소드
@@ -184,3 +188,46 @@ toggle('<class명>')  // 클래스명 존재시 제거 없으면 추가
 
 ![img27](./img/img27.png)
 
+## 속성 api
+
+속성이란 태그의 이름만으로 정보를 나타내기 어려울 때 부가적으로 작성하는 기능들이다. 정보들에 대한 부가적인 정보 표시 attribute
+
+속성을 제어하는 api
+* Element.getAttribute(name) -> element.id == element.getAttribute('id')
+* Element.setAtribute(name, value): 기존 속성값을 바꾸거나 새로운 속성값을 추가할 수 있다. 
+* Element.hasAttribute(name): 속성의 존재 여부를 확인한다. 
+* Element.removeAttribute(name): 기존 속성을 삭제하는 방법 
+
+~~~
+<a id="target" href="http://opentutorials.org">opentutorials</a>
+<script>
+var t = document.getElementById('target');
+console.log(t.getAttribute('href')); //http://opentutorials.org
+t.setAttribute('title', 'opentutorials.org'); // title 속성의 값을 설정한다.
+console.log(t.hasAttribute('title')); // true, title 속성의 존재여부를 확인한다.
+t.removeAttribute('title'); // title 속성을 제거한다.
+console.log(t.hasAttribute('title')); // false, title 속성의 존재여부를 확인한다.
+</script>
+~~~
+
+### atribute(속성) vs property
+
+~~~
+<p id="target">
+    Hello world
+</p>
+<script>
+    var target = document.getElementById('target');
+    // attribute 방식
+    target.setAttribute('class', 'important');
+    // property 방식
+    target.className = 'important';
+</script>
+~~~
+
+#### 속성 방법 -> element의 메서드를 사용하여 속상값을 바꾸는 방법
+target element의 setAttibute를 통해서 class 값을 important로 지정하는 방식을 속성 방식
+
+#### property 방법 -> element의 property 자체에 접근하여 속성값을 바꾸는 방법
+target의 프로퍼티중에 className을 직접 지정하는 방식을 property 방식이다. 
+더 칸편하고 속도가 빠르다. 하지만 
