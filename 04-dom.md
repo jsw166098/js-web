@@ -63,7 +63,7 @@
 ~~~
 ![img10](./img/img10.png)
 
-### document.getElemetnsByClassName
+### document.getElementsByClassName
 
 * class 속성의 값을 기준으로 객체 조회
 * html에서는 class 자바스크립트에서는 classname으로 부른다. 
@@ -112,7 +112,7 @@
 ~~~
 ![img12](./img/img12.png)
 
-### queryselector
+### querySelector
 * css 선택자의 문법을 이용해서 객체 조회
 * queryselector는 하나의 element만 리턴한다. 제일 먼저 나타나는 것!  
 * 반환값이 배열 형태가 아니다. 
@@ -145,7 +145,7 @@
 ![img13](./img/img13.png)
 
 
-### queryselectoryall
+### querySelectorAll
 * queryselectoryall는 모든 element를 리턴한다.
 
 ~~~

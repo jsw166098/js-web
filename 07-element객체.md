@@ -12,6 +12,8 @@
 
 ![img24](./img/img24.png)
 
+출처: 생활코딩
+
 ### ELEMENT와 HTMLELEMENT 객체를 분화한 이유
 
 html의 element 만을 위한 기능을 추가하기 위해서 이다. 
@@ -107,6 +109,78 @@ active.className += " readed"
 
 ## Element.classList
 
-~~~
+* (HTMLElement)Element에 사용하면 `DOMTokenList 객체` 반환
+
+![img25](./img/img25.png)
 
 ~~~
+var active = document.getElementById('active')  //active는 HTMLElement 객체이다.
+
+active.classlist  // DOMTokenList이다. 
+~~~
+
+![img26](./img/img26.png)
+
+~~~
+active.classList.add('important')  //클리스명 추가
+
+active.classList.remove('important')  //클래스명 제거
+
+active.classList.toggle('important')  // 존재하면 삭제 없으면 추가
+~~~
+
+### DOMTokenList
+
+* classList 메서드 사용시 반환되는 객체이며 클래스의 이름을 담고 있다.
+* 유사배열이기 때문에 배열처럼 사용할 수 있다. 
+
+~~~
+add('<class명>')  //클래스명 추가 
+remove('<class명>')  //클래스명 제거 
+toggle('<class명>')  // 클래스명 존재시 제거 없으면 추가
+~~~
+
+---
+
+# 조회 api
+
+## document.getElementBy* 메소드
+* document 객체는 문서 전체를 의미하는 개개체이다.
+* 문서 전체를 대상으로 element를 찾게 된다.
+
+## element.getElementBy* 메소드
+* document가 아닌 특정 element로 조회를 하기 때문에 범위를 주르일 수 있다. 
+* 어떤 객체의 하위 객체에서 찾을 때 유용하다.
+
+~~~
+<ul>
+    <li class="marked">html</li>
+    <li>css</li>
+    <li id="active">JavaScript
+        <ul>
+            <li>JavaScript Core</li>
+            <li class="marked">DOM</li>
+            <li class="marked">BOM</li>
+        </ul>
+    </li>
+</ul>
+<script>
+    var list = document.getElementsByClassName('marked');
+    console.group('document');
+    for(var i=0; i<list.length; i++){
+        console.log(list[i].textContent);
+    }
+    console.groupEnd();
+     
+    console.group('active');
+    var active = document.getElementById('active');     
+    var list = active.getElementsByClassName('marked');
+    for(var i=0; i<list.length; i++){
+        console.log(list[i].textContent);
+    }
+    console.groupEnd();
+</script>
+~~~
+
+![img27](./img/img27.png)
+
