@@ -112,19 +112,311 @@ body.firstChild.nextSibling.nodeName
 [img35](./img/img35.png)
 
 ## 재귀함수 1
-Node.nodeType, Node.nodeName 메서드를 통해 하위 element에 접근하여 함수를 작성
+* 특정 element 부터 하위 element들을 찾는 메서드 작성
 
-body 부터 시작해서 element 하나하나를 접근한다.
+### travers 함수
+* 첫번째 인자: 조회하려는 가장 최상위 root element
+* 두번째 인자: 현재 탐색하고 있는 element를 첫번째 인자로 가진 함수
 ~~~
+traverse(document.getElementById('start'), function(elemn){
+
+})
+
+//body 부터 시작해서 element 하나하나를 접근한다.
 traverse(document.getElementById('start'), function(elemn){
     console.log(elem);
 })
-~~~
 
-~~~
+// a 태그만 조회
 traverse(document.getElementById('start'), function(elemn){
     if(elem.nodeName === 'A'){
         elem.style.backgroundColor = 'blue';    
     }
 })
+~~~
+
+#### 파라미터를 함수형태로 작성한다.
+* 선언된 함수를 사용할 때 매개변수 작성부에 함수 내용을 정의한다. 
+~~~
+function traverse(target, callback){
+    callback(target);
+}
+
+traverse(document.getElementById('start'), function(elem)){
+    console.log(elem);
+}
+~~~
+
+#### 하위 태그로 이동할때는 재귀법이 사용된다.
+* 자식노드를 조회한 후 모든 자식 노드를 함수 처리한다.  
+~~~
+function traverse(target, callback){
+    callback(target);
+    var c = target.childNodes;
+    for(var i=0; i<c.length; i++){
+        traverse(c[i], callback);
+    }
+}
+
+traverse(document.getElementById('start'), function(elem)){
+    console.log(elem);
+}
+~~~
+
+~~~
+<!DOCTYPE html>
+<html>
+<body id="start">
+<ul>
+    <li><a href="./532">html</a></li> 
+    <li><a href="./533">css</a></li>
+    <li><a href="./534">JavaScript</a>
+        <ul>
+            <li><a href="./535">JavaScript Core</a></li>
+            <li><a href="./536">DOM</a></li>
+            <li><a href="./537">BOM</a></li>
+        </ul>
+    </li>
+</ul>
+<script>
+function traverse(target, callback){
+    if(target.nodeType === 1){
+        //if(target.nodeName === 'A')
+        callback(target);
+        var c = target.childNodes;
+        for(var i=0; i<c.length; i++){
+            traverse(c[i], callback);       
+        }   
+    }
+}
+traverse(document.getElementById('start'), function(elem){
+    console.log(elem);
+});
+</script>
+</body>
+</html>
+~~~
+
+---
+
+# Node 변경 API
+
+* 노드 추가
+* 노드 제거
+* 노드 변경
+
+## Node 추가
+* appendChild(child): 매개변수로 주어진 엘리먼트를 노드의 마지막 자식 노드로 추가한다. 
+* insertBefore(newElement, referenceElement): 방법은 동일하며 두번째 인자를 통해 해당 노드 바로 뒤의 위치에 자식노드로 추가된다. 
+
+### 노드 생성 api
+노드를 추가하기 위해서는 추가할 element를 생성해야 하며 이것은 document 객체의 기능이다.
+* document.createElement(tagname): element 노드를 추가하다.
+* document.createTextNode(data): 텍스트 노드를 추가한다. 
+
+~~~
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="callAppendChild();" value="appendChild()" />
+<input type="button" onclick="callInsertBefore();" value="insertBefore()" />
+<script>
+    function callAppendChild(){
+        var target = document.getElementById('target');
+        var li = document.createElement('li');  //li element 생성만 했다.
+        var text = document.createTextNode('JavaScript');  //text element를 생성만 했다. 
+        li.appendChild(text);
+        target.appendChild(li);
+    }
+ 
+    function callInsertBefore(){
+        var target = document.getElementById('target');
+        var li = document.createElement('li');
+        var text = document.createTextNode('jQuery');
+        li.appendChild(text);
+        target.insertBefore(li, target.firstChild);
+    }
+</script>
+~~~
+
+* target의 firstChild는 text이다.
+![img36](./img/img36.png)
+
+## Node 제거
+* removeChild(child): 부모객체로 접근하여 해당 element를 제거해야한다. -> 부모 element 접근시 parentNode를 접근한다.
+~~~
+target.parentNode.removeChild(target);
+~~~
+
+
+## Node 변경
+* replaceChild(newChild, oldChild)
+~~~
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li id="target">JavaScript</li>
+</ul>
+<input type="button" onclick="callReplaceChild();" value="replaceChild()" />
+<script>
+    function callReplaceChild(){
+        var a = document.createElement('a');
+        a.setAttribute('href', 'http://opentutorials.org/module/904/6701');
+        a.appendChild(document.createTextNode('Web browser JavaScript'));
+ 
+        var target = document.getElementById('target');
+        target.replaceChild(a,target.firstChild);
+    }
+</script>
+~~~
+
+---
+
+# JQuery Node 변경 API
+
+## 추가
+
+![img37](./img/img37.png)
+
+출처: [생활코딩](https://opentutorials.org/course/1375/6743)
+
+* 지정된 대상의 모든 element에 적용된다. 
+* `before`과 `after`은 target의 형제로 삽입된다.
+* `prepend`와 `append`는 target의 자식으로 삽입된다.
+
+~~~
+//before
+<div class="target">
+//prepend
+    content1
+//append
+</div>
+//after
+
+ //before
+<div class="target">
+//prepend
+    content2
+//append
+</div>
+//after 
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('.target').before('<div>before</div>');
+    $('.target').after('<div>after</div>');
+    $('.target').prepend('<div>prepend</div>');
+    $('.target').append('<div>append</div>');
+</script>
+~~~
+
+## 제거
+
+* remove: 선택된 엘리먼트가 제거된다.
+* empty : 선택된 엘리먼트의 text 엘리먼트가 제거된다.
+
+~~~
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div class="target" id="target2">
+    target 2
+</div>
+ 
+<input type="button" value="remove target 1" id="btn1" />
+<input type="button" value="empty target 2" id="btn2" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('#target1').remove();
+    })
+    $('#btn2').click(function(){
+        $('#target2').empty();
+    })
+</script>
+~~~
+
+* id가 target1인 엘리먼트 자체는 삭제되어서 존재하지 않으며 id가 target2인 엘리먼트만 존재한다. 이때 target2 엘리먼트에는 텍스트 내용이 제거되었다.
+
+![img38](./img/img38.png)
+
+## 바꾸기
+* replaceAll: 변경할 것(결과) -> 변경될 것(제어 대상자)
+* replaceWith: 변경될 것(제어 대상자) -> 변경할 것(결과)
+
+제어 대상과 바꾸고자 하는 것의 위치 
+
+
+~~~
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div class="target" id="target2">
+    target 2
+</div>
+ 
+<input type="button" value="replaceAll target 1" id="btn1" />
+<input type="button" value="replaceWith target 2" id="btn2" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('<div>replaceAll</div>').replaceAll('#target1');
+    })
+    $('#btn2').click(function(){
+        $('#target2').replaceWith('<div>replaceWith</div>');
+    })
+</script>
+~~~
+
+## 복사
+
+* 노드를 복사한다.
+* 복사하여 똑같은 것이 만들어진다.
+
+~~~
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div class="target" id="target2">
+    target 2
+</div>
+ 
+<div id="source">source</div>
+ 
+<input type="button" value="clone replaceAll target 1" id="btn1" />
+<input type="button" value="clone replaceWith target 2" id="btn2" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('#source').clone().replaceAll('#target1');
+    })
+    $('#btn2').click(function(){
+        $('#target2').replaceWith($('#source').clone());
+    })
+</script>
+~~~
+
+![img39](./img/img39.png)
+
+## 이동
+* 노드 이동 -> 노드 단순 추가하는 기능이다.
+
+~~~
+<div class="target" id="target1">
+    target 1
+</div>
+ 
+<div id="source">source</div>
+ 
+<input type="button" value="append source to target 1" id="btn1" />
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#btn1').click(function(){
+        $('#target1').append($('#source'));
+    })
+</script>
 ~~~
