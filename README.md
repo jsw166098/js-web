@@ -76,7 +76,6 @@ text 노드
 ~~~
 
 ## document 노드
-ㅂ
 
 ## text 노드
 
