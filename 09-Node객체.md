@@ -2,6 +2,7 @@
 * DOM의 가장 최상위 객체이다. 모든 DOM의 객체는 Node 객체를 상속받는다. Node의 모든 프로퍼티를 상속받는다. 
 
 ![img32](./img/img32.png)
+출처: [생활코딩](https://opentutorials.org/course/1375/6698)
 
 ## 노드의 관계
 각각의 노드 객체에 관계성을 부여하는 api이며 각각의 노드들이 어떤 관계(상속)인지 알아내는 기능을 한다.
@@ -420,3 +421,144 @@ target.parentNode.removeChild(target);
     })
 </script>
 ~~~
+
+---
+
+# 문자열로 노드 제어
+
+기존의 노드 api를 사용하여 제어하던 복잡한 방식을 편리하게 해주는 방법들이다. 조회 후 변경할 때 문자열 형태로 인자를 전달하면 해당 문자대로 코드를 적용시켜준다.
+* innerHTML
+* outerHTML
+* innerText, outerText
+* insertAdjacentHTML()
+
+## innerHTML
+* 엘리먼트의 하위 엘리먼트 코드를 조회할 수 있으며 값을 변경할 수도 있다.
+~~~
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.innerHTML);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.innerHTML = "<li>JavaScript Core</li><li>BOM</li><li>DOM</li>";
+    }
+</script>
+~~~
+
+* 기존 화면
+![img40.png](./img/img40.png)
+
+* get click -> 하위태그의 엘리먼트 표시
+![img41.png](./img/img41.png)
+
+* set click -> 하위태그 내용을 변경
+![img42.png](./img/img42.png)
+
+## outerHTML
+* 자시자신을 포함한 전체 엘리먼트 조회 및 변경 가능
+~~~
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.outerHTML);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.outerHTML = "<ol><li>JavaScript Core</li><li>BOM</li><li>DOM</li></ol>";
+    }
+</script>
+~~~
+
+* 기존 화면
+![img43.png](./img/img43.png)
+
+* get click -> 자신을 포함한 전체 엘리먼트 표시
+![img44.png](./img/img44.png)
+
+* set click -> 자신을 포함한 전체 엘리먼트 값 변경
+![img45.png](./img/img45.png)
+
+## innerText, outerText
+
+* 읽기를 하게되면 태그가 제외된 상태로 읽기가 되고
+쓰기를 하게 되면 그 태그에 해당되는 내용이 문서에 반영되지않고 태그 내용 그대로 문서에 출력된다.
+
+~~~
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');
+        alert(target.innerText);
+    }
+    function set(){
+        var target = document.getElementById('target');
+        target.innerText = "<li>JavaScript Core</li><li>BOM</li><li>DOM</li>";
+    }
+</script>
+~~~
+
+* 기존 화면
+![img46.png](./img/img46.png)
+
+* get click -> 태그가 제외된 상태로 출력
+![img47.png](./img/img47.png)
+
+* set click -> 반영되지 않고 그대로 출력
+![img48.png](./img/img48.png)
+
+## insertAdjacentHTMl()
+
+* 첫번째 인자로 4가지가 올 수 있다. `beforebegin`, `afterbegin`, `beforeend`, `afterend` 각각 `before`, `after`, `prepend`, `append`와 위치가 동일하다. 
+* begin으로 끝나는 인자들은 시작되기 전을 의미하므로 해당 태그 바깥을 의미하며 end로 끝나는 인자들은 끝나기 전을 의미하므로 태그 아쪽을 의미한다. 
+* 두번째 인자로 html 코드를 전달한다. 
+
+~~~
+<ul id="target">
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="beforebegin();" value="beforebegin" />
+<input type="button" onclick="afterbegin();" value="afterbegin" />
+<input type="button" onclick="beforeend();" value="beforeend" />
+<input type="button" onclick="afterend();" value="afterend" />
+<script>
+    function beforebegin(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('beforebegin','<h1>Client Side</h1>');
+    }
+    function afterbegin(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('afterbegin','<li>HTML</li>');
+    }
+    function beforeend(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('beforeend','<li>JavaScript</li>');
+    }
+    function afterend(){
+        var target = document.getElementById('target');
+        target.insertAdjacentHTML('afterend','<h1>Server Side</h1>');
+    }
+</script>
+~~~
+
+* 버튼을 전부 click할 시
+
+![img49](./img/img49.png)

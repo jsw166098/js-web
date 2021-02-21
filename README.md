@@ -55,9 +55,30 @@ DOM은 객체 형태로 설계되어 있다. 따라서 객체 단위로 제어 �
 * removeChild
 * replaceChild
 
+### 문자열로 노드 제어
+* innerHTML
+* outerHTML
+* innerText, outerText
+* insertAdjacentHTML()
+
 `(09-Node객체)`
 
+---
 
+# 노드의 각 요소
+
+![img32](./img/img32.png)
+출처: [생활코딩](https://opentutorials.org/course/1375/6698)
+
+~~~
+document 노드
+text 노드
+~~~
+
+## document 노드
+ㅂ
+
+## text 노드
 
 ---
 ## 출처
