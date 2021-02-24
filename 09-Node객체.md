@@ -108,9 +108,9 @@ body.firstChild.nodeType === Node.TEXT_NODE  //true
 body.firstChild.nextSibling.nodeName
 ~~~
 
-[img34](./img/img34.png)
+![img34](./img/img34.png)
 
-[img35](./img/img35.png)
+![img35](./img/img35.png)
 
 ## 재귀함수 1
 * 특정 element 부터 하위 element들을 찾는 메서드 작성

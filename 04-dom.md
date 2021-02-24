@@ -262,7 +262,6 @@ $('$active').css('color', 'red').css('textDecoration', 'underline');
 #### 체이닝
 
 * 선택한 elements 들에 대해서 연속적으로 메소드를 호출해서 작업을 하는 것
-
 ~~~
 // 첫번째 css 메서드의 리턴값을 그 다음 css 메서드가 받아 적용시킨다. 즉 색이 붉은색으로 변경된 단어 밑에 밑줄이 생긴다. 체이닝!!
 $('$active').css('color', 'red').css('textDecoration', 'underline');

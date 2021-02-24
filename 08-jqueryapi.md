@@ -27,7 +27,6 @@ t.removeAttr('title'); // title 속성을 제거한다.
 # attribute와 property 
 
 * attr은 attribute 방식이다. 태그 속성값에 작성된 그대로 받아들인다. 
-
 * prop은 property 방식이다. 적용된 값이 반환된다.
 
 
